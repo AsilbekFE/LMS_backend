@@ -24,7 +24,21 @@ const documentFilter = (req, file, cb) => {
     if (allowed.includes(ext)) {
         cb(null, true)
     } else {
-        cb(new Error("Faqat PDF, TXT, DOC, ZIP yoki rasm formatidagi fayllar qabul qilinadi"), false)
+        const err = new Error("Faqat PDF, TXT, DOC, ZIP yoki rasm formatidagi fayllar qabul qilinadi")
+        err.status = 400
+        cb(err, false)
+    }
+}
+
+const videoFilter = (req, file, cb) => {
+    const allowed = [".mp4", ".mov", ".avi", ".mkv", ".webm"]
+    const ext = path.extname(file.originalname).toLowerCase()
+    if (allowed.includes(ext)) {
+        cb(null, true)
+    } else {
+        const err = new Error("Faqat MP4, MOV, AVI, MKV yoki WEBM formatidagi video fayllar qabul qilinadi")
+        err.status = 400
+        cb(err, false)
     }
 }
 
@@ -58,6 +72,20 @@ const homeworkStorage = multer.diskStorage({
     }
 })
 
-export const uploadVideo = multer({ storage: videoStorage })
-export const uploadMaterial = multer({ storage: materialStorage, fileFilter: documentFilter })
-export const uploadHomework = multer({ storage: homeworkStorage, fileFilter: documentFilter })
+export const uploadVideo = multer({
+    storage: videoStorage,
+    fileFilter: videoFilter,
+    limits: { fileSize: 500 * 1024 * 1024 }
+})
+
+export const uploadMaterial = multer({
+    storage: materialStorage,
+    fileFilter: documentFilter,
+    limits: { fileSize: 50 * 1024 * 1024 }
+})
+
+export const uploadHomework = multer({
+    storage: homeworkStorage,
+    fileFilter: documentFilter,
+    limits: { fileSize: 50 * 1024 * 1024 }
+})
