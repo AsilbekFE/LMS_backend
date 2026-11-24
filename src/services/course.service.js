@@ -1,5 +1,5 @@
 import pool from "../config/db.js"
-import { NotFoundError } from "../utils/error.utils.js"
+import { NotFoundError, BadRwquestError } from "../utils/error.utils.js"
 
 class CourseService {
     async getAllCourses() {
@@ -12,6 +12,11 @@ class CourseService {
 
     async getOneCourse(req, next) {
         const { id } = req.params
+
+        if (isNaN(id)) {
+            return next(new BadRwquestError(400, "Kurs ID raqam bo'lishi kerak"))
+        }
+
         const course = await pool.query("SELECT * FROM courses WHERE id=$1", [id])
 
         if (!course.rows.length) {
@@ -44,6 +49,10 @@ class CourseService {
         const { id } = req.params
         const { name, direction, price, status } = req.body
 
+        if (isNaN(id)) {
+            return next(new BadRwquestError(400, "Kurs ID raqam bo'lishi kerak"))
+        }
+
         const existCourse = await pool.query("SELECT id FROM courses WHERE id=$1", [id])
         if (!existCourse.rows.length) {
             return next(new NotFoundError(404, "Course not found"))
@@ -66,6 +75,10 @@ class CourseService {
 
     async deleteCourse(req, next) {
         const { id } = req.params
+
+        if (isNaN(id)) {
+            return next(new BadRwquestError(400, "Kurs ID raqam bo'lishi kerak"))
+        }
 
         const existCourse = await pool.query("SELECT id FROM courses WHERE id=$1", [id])
         if (!existCourse.rows.length) {
