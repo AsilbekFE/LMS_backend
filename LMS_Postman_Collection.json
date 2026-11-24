@@ -1,0 +1,2784 @@
+{
+  "info": {
+    "name": "LMS Backend API Collection",
+    "description": "Complete API collection for LMS backend (74 endpoints across 15 modules)",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:1212/api/v1",
+      "type": "string"
+    },
+    {
+      "key": "accessToken",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "refreshToken",
+      "value": "",
+      "type": "string"
+    }
+  ],
+  "item": [
+    {
+      "name": "1. Auth",
+      "item": [
+        {
+          "name": "Register Student",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:1212/api/v1/auth/register",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "1212",
+              "path": [
+                "api",
+                "v1",
+                "auth",
+                "register"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"fullname\": \"Ali Valiyev\",\n  \"phone\": \"+998901234567\",\n  \"password\": \"password123\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "const res = pm.response.json();",
+                  "if (res.accessToken) pm.collectionVariables.set(\"accessToken\", res.accessToken);",
+                  "if (res.refreshToken) pm.collectionVariables.set(\"refreshToken\", res.refreshToken);"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        },
+        {
+          "name": "Login",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:1212/api/v1/auth/login",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "1212",
+              "path": [
+                "api",
+                "v1",
+                "auth",
+                "login"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"phone\": \"+998901234567\",\n  \"password\": \"password123\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "const res = pm.response.json();",
+                  "if (res.accessToken) pm.collectionVariables.set(\"accessToken\", res.accessToken);",
+                  "if (res.refreshToken) pm.collectionVariables.set(\"refreshToken\", res.refreshToken);"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        },
+        {
+          "name": "Refresh Token",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:1212/api/v1/auth/refresh-token",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "1212",
+              "path": [
+                "api",
+                "v1",
+                "auth",
+                "refresh-token"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"refreshToken\": \"{{refreshToken}}\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "const res = pm.response.json();",
+                  "if (res.accessToken) pm.collectionVariables.set(\"accessToken\", res.accessToken);",
+                  "if (res.refreshToken) pm.collectionVariables.set(\"refreshToken\", res.refreshToken);"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "2. Admins",
+      "item": [
+        {
+          "name": "Get All Admins",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:1212/api/v1/admins",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "1212",
+              "path": [
+                "api",
+                "v1",
+                "admins"
+              ]
+            },
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{accessToken}}",
+                  "type": "string"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Get One Admin",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:1212/api/v1/admins/1",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "1212",
+              "path": [
+                "api",
+                "v1",
+                "admins",
+                "1"
+              ]
+            },
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{accessToken}}",
+                  "type": "string"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Create Admin",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:1212/api/v1/admins",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "1212",
+              "path": [
+                "api",
+                "v1",
+                "admins"
+              ]
+            },
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{accessToken}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"fullname\": \"Super Admin\",\n  \"phone\": \"+998911112233\",\n  \"password\": \"password123\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "Update Admin",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:1212/api/v1/admins/1",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "1212",
+              "path": [
+                "api",
+                "v1",
+                "admins",
+                "1"
+              ]
+            },
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{accessToken}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"fullname\": \"Updated Admin\",\n  \"phone\": \"+998911112233\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "Delete Admin",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:1212/api/v1/admins/1",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "1212",
+              "path": [
+                "api",
+                "v1",
+                "admins",
+                "1"
+              ]
+            },
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{accessToken}}",
+                  "type": "string"
+                }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "3. Teachers",
+      "item": [
+        {
+          "name": "Get All Teachers",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:1212/api/v1/teachers",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "1212",
+              "path": [
+                "api",
+                "v1",
+                "teachers"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Get One Teacher",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:1212/api/v1/teachers/1",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "1212",
+              "path": [
+                "api",
+                "v1",
+                "teachers",
+                "1"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Create Teacher",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:1212/api/v1/teachers",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "1212",
+              "path": [
+                "api",
+                "v1",
+                "teachers"
+              ]
+            },
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{accessToken}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"fullname\": \"Oybek Safarov\",\n  \"phone\": \"+998933334455\",\n  \"password\": \"password123\",\n  \"experience\": \"5 yil\",\n  \"profession\": \"Senior Frontend Developer\",\n  \"bio\": \"Tajribali dasturchi\",\n  \"website\": \"https://oybek.uz\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "Update Teacher",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:1212/api/v1/teachers/1",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "1212",
+              "path": [
+                "api",
+                "v1",
+                "teachers",
+                "1"
+              ]
+            },
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{accessToken}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"fullname\": \"Oybek Safarov\",\n  \"profession\": \"Lead Mentor\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "Delete Teacher",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:1212/api/v1/teachers/1",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "1212",
+              "path": [
+                "api",
+                "v1",
+                "teachers",
+                "1"
+              ]
+            },
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{accessToken}}",
+                  "type": "string"
+                }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "4. Students",
+      "item": [
+        {
+          "name": "Get All Students",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:1212/api/v1/students",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "1212",
+              "path": [
+                "api",
+                "v1",
+                "students"
+              ]
+            },
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{accessToken}}",
+                  "type": "string"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Get One Student",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:1212/api/v1/students/1",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "1212",
+              "path": [
+                "api",
+                "v1",
+                "students",
+                "1"
+              ]
+            },
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{accessToken}}",
+                  "type": "string"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Create Student",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:1212/api/v1/students",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "1212",
+              "path": [
+                "api",
+                "v1",
+                "students"
+              ]
+            },
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{accessToken}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"fullname\": \"Salim Karimov\",\n  \"phone\": \"+998944445566\",\n  \"password\": \"password123\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "Update Student",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:1212/api/v1/students/1",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "1212",
+              "path": [
+                "api",
+                "v1",
+                "students",
+                "1"
+              ]
+            },
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{accessToken}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"fullname\": \"Salim Karimov\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "Delete Student",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:1212/api/v1/students/1",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "1212",
+              "path": [
+                "api",
+                "v1",
+                "students",
+                "1"
+              ]
+            },
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{accessToken}}",
+                  "type": "string"
+                }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "5. Assistants",
+      "item": [
+        {
+          "name": "Get All Assistants",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:1212/api/v1/assistants",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "1212",
+              "path": [
+                "api",
+                "v1",
+                "assistants"
+              ]
+            },
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{accessToken}}",
+                  "type": "string"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Get One Assistant",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:1212/api/v1/assistants/1",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "1212",
+              "path": [
+                "api",
+                "v1",
+                "assistants",
+                "1"
+              ]
+            },
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{accessToken}}",
+                  "type": "string"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Create Assistant",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:1212/api/v1/assistants",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "1212",
+              "path": [
+                "api",
+                "v1",
+                "assistants"
+              ]
+            },
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{accessToken}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"fullname\": \"Jahongir Qodirov\",\n  \"phone\": \"+998955556677\",\n  \"password\": \"password123\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "Update Assistant",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:1212/api/v1/assistants/1",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "1212",
+              "path": [
+                "api",
+                "v1",
+                "assistants",
+                "1"
+              ]
+            },
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{accessToken}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"fullname\": \"Jahongir Qodirov\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "Delete Assistant",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:1212/api/v1/assistants/1",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "1212",
+              "path": [
+                "api",
+                "v1",
+                "assistants",
+                "1"
+              ]
+            },
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{accessToken}}",
+                  "type": "string"
+                }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "6. Categories",
+      "item": [
+        {
+          "name": "Get All Categories",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:1212/api/v1/categories",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "1212",
+              "path": [
+                "api",
+                "v1",
+                "categories"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Get One Category",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:1212/api/v1/categories/1",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "1212",
+              "path": [
+                "api",
+                "v1",
+                "categories",
+                "1"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Create Category",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:1212/api/v1/categories",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "1212",
+              "path": [
+                "api",
+                "v1",
+                "categories"
+              ]
+            },
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{accessToken}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Frontend dasturlash\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "Update Category",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:1212/api/v1/categories/1",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "1212",
+              "path": [
+                "api",
+                "v1",
+                "categories",
+                "1"
+              ]
+            },
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{accessToken}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Frontend va Veb dasturlash\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "Delete Category",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:1212/api/v1/categories/1",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "1212",
+              "path": [
+                "api",
+                "v1",
+                "categories",
+                "1"
+              ]
+            },
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{accessToken}}",
+                  "type": "string"
+                }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "7. Courses",
+      "item": [
+        {
+          "name": "Get All Courses",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:1212/api/v1/courses",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "1212",
+              "path": [
+                "api",
+                "v1",
+                "courses"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Get One Course",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:1212/api/v1/courses/1",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "1212",
+              "path": [
+                "api",
+                "v1",
+                "courses",
+                "1"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Create Course",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:1212/api/v1/courses",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "1212",
+              "path": [
+                "api",
+                "v1",
+                "courses"
+              ]
+            },
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{accessToken}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"React va Frontend kursi\",\n  \"direction\": \"Dasturlash\",\n  \"price\": 500000\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "Update Course",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:1212/api/v1/courses/1",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "1212",
+              "path": [
+                "api",
+                "v1",
+                "courses",
+                "1"
+              ]
+            },
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{accessToken}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"React va Next.js kursi\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "Delete Course",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:1212/api/v1/courses/1",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "1212",
+              "path": [
+                "api",
+                "v1",
+                "courses",
+                "1"
+              ]
+            },
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{accessToken}}",
+                  "type": "string"
+                }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "8. Sections",
+      "item": [
+        {
+          "name": "Get All Sections",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:1212/api/v1/sections",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "1212",
+              "path": [
+                "api",
+                "v1",
+                "sections"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Get Sections by Course",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:1212/api/v1/sections?course_id=1",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "1212",
+              "path": [
+                "api",
+                "v1",
+                "sections?course_id=1"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Get One Section",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:1212/api/v1/sections/1",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "1212",
+              "path": [
+                "api",
+                "v1",
+                "sections",
+                "1"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Create Section",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:1212/api/v1/sections",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "1212",
+              "path": [
+                "api",
+                "v1",
+                "sections"
+              ]
+            },
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{accessToken}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"course_id\": 1,\n  \"name\": \"Veb dasturlashga kirish\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "Update Section",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:1212/api/v1/sections/1",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "1212",
+              "path": [
+                "api",
+                "v1",
+                "sections",
+                "1"
+              ]
+            },
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{accessToken}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"HTML va CSS asoslari\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "Delete Section",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:1212/api/v1/sections/1",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "1212",
+              "path": [
+                "api",
+                "v1",
+                "sections",
+                "1"
+              ]
+            },
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{accessToken}}",
+                  "type": "string"
+                }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "9. Lessons",
+      "item": [
+        {
+          "name": "Get All Lessons",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:1212/api/v1/lessons",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "1212",
+              "path": [
+                "api",
+                "v1",
+                "lessons"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Get Lessons by Section",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:1212/api/v1/lessons?section_id=1",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "1212",
+              "path": [
+                "api",
+                "v1",
+                "lessons?section_id=1"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Get One Lesson",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:1212/api/v1/lessons/1",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "1212",
+              "path": [
+                "api",
+                "v1",
+                "lessons",
+                "1"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Create Lesson (with Video)",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:1212/api/v1/lessons",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "1212",
+              "path": [
+                "api",
+                "v1",
+                "lessons"
+              ]
+            },
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{accessToken}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "section_id",
+                  "value": "1",
+                  "type": "text"
+                },
+                {
+                  "key": "title",
+                  "value": "HTML teglari bilan tanishuv",
+                  "type": "text"
+                },
+                {
+                  "key": "description",
+                  "value": "Bu darsda asosiy HTML teglari o'rganiladi",
+                  "type": "text"
+                },
+                {
+                  "key": "video",
+                  "type": "file",
+                  "src": []
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Update Lesson",
+          "request": {
+            "method": "PUT",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:1212/api/v1/lessons/1",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "1212",
+              "path": [
+                "api",
+                "v1",
+                "lessons",
+                "1"
+              ]
+            },
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{accessToken}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "title",
+                  "value": "HTML teglari (yangilangan)",
+                  "type": "text"
+                },
+                {
+                  "key": "description",
+                  "value": "To'liq tushuntirish",
+                  "type": "text"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Delete Lesson",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:1212/api/v1/lessons/1",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "1212",
+              "path": [
+                "api",
+                "v1",
+                "lessons",
+                "1"
+              ]
+            },
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{accessToken}}",
+                  "type": "string"
+                }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "10. Materials",
+      "item": [
+        {
+          "name": "Get All Materials",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:1212/api/v1/materials",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "1212",
+              "path": [
+                "api",
+                "v1",
+                "materials"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Get Materials by Lesson",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:1212/api/v1/materials?lesson_id=1",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "1212",
+              "path": [
+                "api",
+                "v1",
+                "materials?lesson_id=1"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Get One Material",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:1212/api/v1/materials/1",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "1212",
+              "path": [
+                "api",
+                "v1",
+                "materials",
+                "1"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Create Material (with File)",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:1212/api/v1/materials",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "1212",
+              "path": [
+                "api",
+                "v1",
+                "materials"
+              ]
+            },
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{accessToken}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "lesson_id",
+                  "value": "1",
+                  "type": "text"
+                },
+                {
+                  "key": "title",
+                  "value": "Dars konspekti PDF",
+                  "type": "text"
+                },
+                {
+                  "key": "file",
+                  "type": "file",
+                  "src": []
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Update Material",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:1212/api/v1/materials/1",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "1212",
+              "path": [
+                "api",
+                "v1",
+                "materials",
+                "1"
+              ]
+            },
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{accessToken}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"title\": \"Yangilangan konspekt PDF\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "Delete Material",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:1212/api/v1/materials/1",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "1212",
+              "path": [
+                "api",
+                "v1",
+                "materials",
+                "1"
+              ]
+            },
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{accessToken}}",
+                  "type": "string"
+                }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "11. Questions",
+      "item": [
+        {
+          "name": "Get All Questions",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:1212/api/v1/questions",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "1212",
+              "path": [
+                "api",
+                "v1",
+                "questions"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Get Questions by Lesson",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:1212/api/v1/questions?lesson_id=1",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "1212",
+              "path": [
+                "api",
+                "v1",
+                "questions?lesson_id=1"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Get One Question",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:1212/api/v1/questions/1",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "1212",
+              "path": [
+                "api",
+                "v1",
+                "questions",
+                "1"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Create Question",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:1212/api/v1/questions",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "1212",
+              "path": [
+                "api",
+                "v1",
+                "questions"
+              ]
+            },
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{accessToken}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"lesson_id\": 1,\n  \"question\": \"CSS kengaytmasini toping\",\n  \"option_a\": \"Cascading Style Sheets\",\n  \"option_b\": \"Creative Style Sheets\",\n  \"option_c\": \"Computer Style Sheets\",\n  \"option_d\": \"Colorful Style Sheets\",\n  \"correct_option\": \"A\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "Update Question",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:1212/api/v1/questions/1",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "1212",
+              "path": [
+                "api",
+                "v1",
+                "questions",
+                "1"
+              ]
+            },
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{accessToken}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"question\": \"CSS to'liq nomini toping\",\n  \"option_a\": \"Cascading Style Sheets\",\n  \"option_b\": \"Creative Style Sheets\",\n  \"option_c\": \"Computer Style Sheets\",\n  \"option_d\": \"Colorful Style Sheets\",\n  \"correct_option\": \"A\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "Delete Question",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:1212/api/v1/questions/1",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "1212",
+              "path": [
+                "api",
+                "v1",
+                "questions",
+                "1"
+              ]
+            },
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{accessToken}}",
+                  "type": "string"
+                }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "12. Student Dashboard",
+      "item": [
+        {
+          "name": "My Courses (Mening kurslarim)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:1212/api/v1/student/my-courses",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "1212",
+              "path": [
+                "api",
+                "v1",
+                "student",
+                "my-courses"
+              ]
+            },
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{accessToken}}",
+                  "type": "string"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Course Curriculum (Darslar daraxti va cheklar)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:1212/api/v1/student/courses/1/curriculum",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "1212",
+              "path": [
+                "api",
+                "v1",
+                "student",
+                "courses",
+                "1",
+                "curriculum"
+              ]
+            },
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{accessToken}}",
+                  "type": "string"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Complete Lesson (Darsni yakunlash)",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:1212/api/v1/student/lessons/1/complete",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "1212",
+              "path": [
+                "api",
+                "v1",
+                "student",
+                "lessons",
+                "1",
+                "complete"
+              ]
+            },
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{accessToken}}",
+                  "type": "string"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Get Lesson Q&A",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:1212/api/v1/student/lessons/1/qa",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "1212",
+              "path": [
+                "api",
+                "v1",
+                "student",
+                "lessons",
+                "1",
+                "qa"
+              ]
+            },
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{accessToken}}",
+                  "type": "string"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Ask Q&A Question",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:1212/api/v1/student/lessons/1/qa",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "1212",
+              "path": [
+                "api",
+                "v1",
+                "student",
+                "lessons",
+                "1",
+                "qa"
+              ]
+            },
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{accessToken}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"question\": \"Ustoz, ushbu mavzu bo'yicha savolim bor edi...\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "Get Lesson Materials",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:1212/api/v1/student/lessons/1/materials",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "1212",
+              "path": [
+                "api",
+                "v1",
+                "student",
+                "lessons",
+                "1",
+                "materials"
+              ]
+            },
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{accessToken}}",
+                  "type": "string"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Submit Assignment (Vazifa topshirish)",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:1212/api/v1/student/lessons/1/assignments",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "1212",
+              "path": [
+                "api",
+                "v1",
+                "student",
+                "lessons",
+                "1",
+                "assignments"
+              ]
+            },
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{accessToken}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "file",
+                  "type": "file",
+                  "src": []
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Get Section Exam (Imtihon savollarini olish)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:1212/api/v1/student/sections/1/exam",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "1212",
+              "path": [
+                "api",
+                "v1",
+                "student",
+                "sections",
+                "1",
+                "exam"
+              ]
+            },
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{accessToken}}",
+                  "type": "string"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Submit Exam (Test javoblarini topshirish)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:1212/api/v1/student/sections/1/exam/submit",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "1212",
+              "path": [
+                "api",
+                "v1",
+                "student",
+                "sections",
+                "1",
+                "exam",
+                "submit"
+              ]
+            },
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{accessToken}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"answers\": [\n    {\n      \"question_id\": 1,\n      \"answer\": \"A\"\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "13. Orders",
+      "item": [
+        {
+          "name": "Get All Orders",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:1212/api/v1/orders",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "1212",
+              "path": [
+                "api",
+                "v1",
+                "orders"
+              ]
+            },
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{accessToken}}",
+                  "type": "string"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Get One Order",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:1212/api/v1/orders/1",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "1212",
+              "path": [
+                "api",
+                "v1",
+                "orders",
+                "1"
+              ]
+            },
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{accessToken}}",
+                  "type": "string"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Create Order (Sotib olish)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:1212/api/v1/orders",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "1212",
+              "path": [
+                "api",
+                "v1",
+                "orders"
+              ]
+            },
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{accessToken}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"student_id\": 1,\n  \"course_id\": 1,\n  \"direction\": \"Frontend\",\n  \"price\": 500000,\n  \"payment_type\": \"card\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "14. Roles",
+      "item": [
+        {
+          "name": "Get All Roles",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:1212/api/v1/roles/all",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "1212",
+              "path": [
+                "api",
+                "v1",
+                "roles",
+                "all"
+              ]
+            },
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{accessToken}}",
+                  "type": "string"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Create Role",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:1212/api/v1/roles",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "1212",
+              "path": [
+                "api",
+                "v1",
+                "roles"
+              ]
+            },
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{accessToken}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"manager\",\n  \"status\": \"active\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "Update Role",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:1212/api/v1/roles/1",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "1212",
+              "path": [
+                "api",
+                "v1",
+                "roles",
+                "1"
+              ]
+            },
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{accessToken}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"superadmin\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "Delete Role",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:1212/api/v1/roles/1",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "1212",
+              "path": [
+                "api",
+                "v1",
+                "roles",
+                "1"
+              ]
+            },
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{accessToken}}",
+                  "type": "string"
+                }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "15. Users",
+      "item": [
+        {
+          "name": "Get All Users",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:1212/api/v1/users",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "1212",
+              "path": [
+                "api",
+                "v1",
+                "users"
+              ]
+            },
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{accessToken}}",
+                  "type": "string"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Get One User",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:1212/api/v1/users/1",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "1212",
+              "path": [
+                "api",
+                "v1",
+                "users",
+                "1"
+              ]
+            },
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{accessToken}}",
+                  "type": "string"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Create User",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:1212/api/v1/users",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "1212",
+              "path": [
+                "api",
+                "v1",
+                "users"
+              ]
+            },
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{accessToken}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"fullname\": \"Vali Aliyev\",\n  \"phone\": \"+998990001122\",\n  \"password\": \"password123\",\n  \"roles_id\": 3\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "Update User",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:1212/api/v1/users/1",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "1212",
+              "path": [
+                "api",
+                "v1",
+                "users",
+                "1"
+              ]
+            },
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{accessToken}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"fullname\": \"Vali Aliyev\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "Delete User",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:1212/api/v1/users/1",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "1212",
+              "path": [
+                "api",
+                "v1",
+                "users",
+                "1"
+              ]
+            },
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{accessToken}}",
+                  "type": "string"
+                }
+              ]
+            }
+          }
+        }
+      ]
+    }
+  ]
+}
