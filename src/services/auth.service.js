@@ -41,12 +41,7 @@ class AuthService {
             message: "Student registered successfully",
             accessToken,
             refreshToken,
-            user: {
-                id: user.id,
-                fullname: user.fullname,
-                phone: user.phone,
-                role: "student"
-            }
+            role: "student"
         }
     }
 

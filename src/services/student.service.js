@@ -83,12 +83,7 @@ class StudentService {
             message: "Student created successfully",
             accessToken,
             refreshToken,
-            data: {
-                id: student.id,
-                fullname: student.fullname,
-                phone: student.phone,
-                role: "student"
-            }
+            role: "student"
         }
     }
 
