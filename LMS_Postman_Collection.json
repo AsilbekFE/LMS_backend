@@ -51,7 +51,7 @@
             },
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"fullname\": \"Ali Valiyev\",\n  \"phone\": \"+998901234567\",\n  \"password\": \"password123\"\n}",
+              "raw": "{\n  \"fullname\": \"Ali Valiyev\",\n  \"phone\": \"+998901234567\",\n  \"password\": \"password123\",\n  \"course_id\": 1,\n  \"payment_type\": \"payme\"\n}",
               "options": {
                 "raw": {
                   "language": "json"

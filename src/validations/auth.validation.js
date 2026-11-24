@@ -13,6 +13,12 @@ export const registerValidation = Joi.object({
     password: Joi.string().min(6).max(30).required().messages({
         "string.min": "password kamida 6 ta belgidan iborat bo'lishi kerak",
         "any.required": "password kiritilishi shart"
+    }),
+    course_id: Joi.number().integer().positive().optional().messages({
+        "number.base": "course_id raqam bo'lishi kerak"
+    }),
+    payment_type: Joi.string().max(50).optional().messages({
+        "string.empty": "payment_type bo'sh bo'lishi mumkin emas"
     })
 })
 

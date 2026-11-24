@@ -5,11 +5,20 @@ import { NotFoundError, ConflictError, BadRwquestError } from "../utils/error.ut
 
 class AuthService {
     async register(req, next) {
-        const { fullname, phone, password } = req.body
+        const { fullname, phone, password, course_id, payment_type } = req.body
 
         const existUser = await pool.query("SELECT * FROM users WHERE phone=$1", [phone])
         if (existUser.rows.length) {
             return next(new ConflictError(409, "User already exists with this phone number"))
+        }
+
+        let courseData = null
+        if (course_id) {
+            const courseRes = await pool.query("SELECT id, name, direction, price FROM courses WHERE id=$1", [course_id])
+            if (!courseRes.rows.length) {
+                return next(new NotFoundError(404, "Kurs topilmadi"))
+            }
+            courseData = courseRes.rows[0]
         }
 
         const roleRes = await pool.query("SELECT id FROM roles WHERE LOWER(name) = 'student'")
@@ -23,6 +32,15 @@ class AuthService {
         )
 
         const user = newUser.rows[0]
+
+        let order = null
+        if (courseData) {
+            const newOrder = await pool.query(
+                "INSERT INTO orders(student_id, course_id, direction, price, payment_type, status) VALUES($1, $2, $3, $4, $5, $6) RETURNING *",
+                [user.id, course_id, courseData.direction || null, courseData.price || 0, payment_type || "payme", "paid"]
+            )
+            order = newOrder.rows[0]
+        }
 
         const accessToken = jwt.sign(
             { id: user.id, phone: user.phone, role_id: user.roles_id, role_name: "student" },
@@ -38,10 +56,11 @@ class AuthService {
 
         return {
             status: 201,
-            message: "Student registered successfully",
+            message: course_id ? "Student registered and course purchased successfully" : "Student registered successfully",
             accessToken,
             refreshToken,
-            role: "student"
+            role: "student",
+            order: order || undefined
         }
     }
 
