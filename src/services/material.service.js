@@ -1,5 +1,5 @@
 import pool from "../config/db.js"
-import { NotFoundError } from "../utils/error.utils.js"
+import { NotFoundError, BadRwquestError } from "../utils/error.utils.js"
 
 class MaterialService {
     async getAllMaterials(req) {
@@ -59,6 +59,10 @@ class MaterialService {
     async createMaterial(req, next) {
         const { lesson_id, title } = req.body
         const file = req.file ? req.file.filename : null
+
+        if (!file) {
+            return next(new BadRwquestError(400, "Material fayli yuklanishi shart"))
+        }
 
         const lesson = await pool.query("SELECT id FROM lessons WHERE id = $1", [lesson_id])
         if (!lesson.rows.length) {
