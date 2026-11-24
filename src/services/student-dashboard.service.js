@@ -1,5 +1,5 @@
 import pool from "../config/db.js"
-import { NotFoundError } from "../utils/error.utils.js"
+import { NotFoundError, BadRwquestError } from "../utils/error.utils.js"
 
 class StudentDashboardService {
     async getMyCourses(req) {
@@ -133,12 +133,17 @@ class StudentDashboardService {
         const file = req.file ? req.file.filename : null
 
         if (!file) {
-            return next(new NotFoundError(400, "Vazifa fayli yuklanmadi"))
+            return next(new BadRwquestError(400, "Vazifa fayli yuklanishi shart"))
+        }
+
+        const lesson = await pool.query("SELECT id FROM lessons WHERE id = $1", [lessonId])
+        if (!lesson.rows.length) {
+            return next(new NotFoundError(404, "Dars topilmadi"))
         }
 
         const res = await pool.query(`
-            INSERT INTO student_assignments(student_id, lesson_id, file)
-            VALUES($1, $2, $3)
+            INSERT INTO student_assignments(student_id, lesson_id, file, status)
+            VALUES($1, $2, $3, 'pending')
             RETURNING *
         `, [studentId, lessonId, file])
 

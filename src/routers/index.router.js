@@ -14,6 +14,7 @@ import lessonRouter from "./lesson.router.js"
 import materialRouter from "./material.router.js"
 import questionRouter from "./question.router.js"
 import studentDashboardRouter from "./student-dashboard.router.js"
+import homeworkRouter from "./homework.router.js"
 
 const appRouter = express.Router()
 
@@ -28,6 +29,7 @@ appRouter.use("/api/v1", sectionRouter)
 appRouter.use("/api/v1", lessonRouter)
 appRouter.use("/api/v1", materialRouter)
 appRouter.use("/api/v1", questionRouter)
+appRouter.use("/api/v1", homeworkRouter)
 appRouter.use("/api/v1", studentDashboardRouter)
 appRouter.use("/api/v1", orderRouter)
 appRouter.use("/api/v1", roleRouter)
